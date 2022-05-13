@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 // const oauth_client_id = ***;
 function App() {
   const [notes, setNotes] = useState("")
+  const [pages, setPages] = useState([])
 
   useEffect(() => {
     const params = new URL(window.document.location).searchParams;
@@ -10,8 +11,11 @@ function App() {
     const code = params.get("code");
     console.log({ code });
     if (!code) return;
-    fetch(`http://localhost:4000/login/${code}`)
+    fetch(`http://localhost:4000/login/${code}`, {
+      credentials: "include",
+    })
       .then((resp) => resp.json())
+      .then(titles => setPages(titles))
   }, []);
 
   return (

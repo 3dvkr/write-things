@@ -13,6 +13,26 @@ app.use(express.json());
 app.use(cors());
 app.use(cookieParser());
 
+const url = process.env.MONGO_URL;
+const mongo = require("mongodb").MongoClient;
+let users;
+mongo.connect(
+  url,
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  },
+  (err, client) => {
+    if (err) {
+      console.error(err);
+      return;
+    }
+    const db = client.db("notes-app");
+    users = db.collection("users");
+  }
+);
+
+
 app.get("/", home);
 
 app.post("/notes", getNotes);

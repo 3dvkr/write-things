@@ -4,7 +4,6 @@ const { v4 } = require("uuid");
 const { Client } = require("@notionhq/client");
 
 const users = require("../config/database");
-console.log("from notion.js ", users)
 
 require("dotenv").config();
 const notionClientId = process.env.NOTION_CLIENT_ID;
@@ -20,7 +19,6 @@ const notionLoginReq = {
 const logInUser = async (req, res, next) => {
   const { code } = req.params;
   try {
-    // let user;
     const resp = await axios({
       ...notionLoginReq,
       data: { code, grant_type: "authorization_code" },
@@ -45,6 +43,8 @@ const logInUser = async (req, res, next) => {
     req.token = access_token;
     res.cookie("user", userUUID, {
       secure: true,
+      httpOnly: true,
+      sameSite: "strict",
     });
     next();
   } catch (err) {
@@ -72,7 +72,4 @@ const getDataFromNotion = async (req, res, next) => {
   }
 };
 
-module.exports = [
-  logInUser,
-  getDataFromNotion,
-];
+module.exports = [logInUser, getDataFromNotion];

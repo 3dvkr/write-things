@@ -4,6 +4,7 @@ const { v4 } = require("uuid");
 const { Client } = require("@notionhq/client");
 
 const users = require("../config/database");
+const createPageOptions = require("../config/notionPageOptions");
 
 require("dotenv").config();
 const notionClientId = process.env.NOTION_CLIENT_ID;
@@ -72,4 +73,12 @@ const getDataFromNotion = async (req, res, next) => {
   }
 };
 
-module.exports = [logInUser, getDataFromNotion];
+const postToNotion = async (req, res) => {
+  console.log("REQBODY",req.body, "COOKIE", req.cookies);
+    res.send();
+}
+
+module.exports ={ 
+    getUserInfo: [logInUser, getDataFromNotion], 
+    postToNotion
+};

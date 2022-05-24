@@ -74,8 +74,29 @@ const getDataFromNotion = async (req, res, next) => {
 };
 
 const postToNotion = async (req, res) => {
-  console.log("REQBODY",req.body, "COOKIE", req.cookies);
-    res.send();
+  const { page, notes, memo } = req.body;
+    try {
+      const user = await users.findOne({ uuid: req.cookies.user });
+      if (!user) {
+        return res.status(404).json({ error: "user not found" });
+      }
+      const notionClient = new Client({ auth: user.token });
+
+      const parentPage = await notionClient.search({
+          query: page,
+        });
+
+      const parentPageId = parentPage.results.filter(
+          (page) => page.parent.workspace
+        )[0].id;
+      await notionClient.pages.create(
+          createPageOptions(parentPageId, memo, notes)
+      );
+      res.status(200).send();
+    } catch (err) {
+        console.log(err.message);
+        res.status(400).send(err.message);
+    }
 }
 
 module.exports ={ 

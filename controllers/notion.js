@@ -74,7 +74,7 @@ const getDataFromNotion = async (req, res, next) => {
 };
 
 const postToNotion = async (req, res) => {
-  const { page, notes, memo } = req.body;
+  const { pageName, notes, memo } = req.body;
     try {
       const user = await users.findOne({ uuid: req.cookies.user });
       if (!user) {
@@ -83,7 +83,7 @@ const postToNotion = async (req, res) => {
       const notionClient = new Client({ auth: user.token });
 
       const parentPage = await notionClient.search({
-          query: page,
+          query: pageName,
         });
 
       const parentPageId = parentPage.results.filter(

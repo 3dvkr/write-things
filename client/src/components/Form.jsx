@@ -1,32 +1,67 @@
 import { useState } from "react";
+import {
+  Box,
+  FormControl,
+  InputLabel,
+  NativeSelect,
+  Button,
+  TextField,
+} from "@mui/material";
 
 const Form = ({ pages }) => {
   const [notes, setNotes] = useState("");
-  const [page, setPage] = useState("");
+  const [pageName, setPageName] = useState("");
+  const [memo, setMemo] = useState("");
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    fetch("http://localhost:4000/notes", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({ pageName, notes, memo }),
+    });
+  };
+
   return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault();
-        console.log(notes);
-        fetch("http://localhost:4000/notes", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-          body: JSON.stringify({
-            page,
-            notes,
-          }),
-        });
+    <Box
+      component="form"
+      onSubmit={submitHandler}
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        height: "100%",
+        gap: "1rem",
+        maxWidth: "70ch",
+        margin: "auto",
       }}
     >
-      <label htmlFor="page">Page</label>
-      <select id="page" value={page} onChange={(e) => setPage(e.target.value)}>
-        {pages.map((p, i) => (
-          <option key={i}>{p}</option>
-        ))}
-      </select>
+      <FormControl>
+        <InputLabel htmlFor="pageName">Choose where to save your writing:</InputLabel>
+        <NativeSelect
+          label="Where to save your writing:"
+          name="pageName"
+          value={pageName}
+          id="pageName"
+          onChange={(e) => setPageName(e.target.value)}
+        >
+          {pages.map((page) => (
+            <option value={page} key={page}>
+              {page}
+            </option>
+          ))}
+        </NativeSelect>
+      </FormControl>
+      <TextField
+        label="Title/Memo"
+        name="memo"
+        placeholder="Title/Memo"
+        onChange={(e) => {
+          setMemo(e.target.value);
+        }}
+        value={memo}
+      />
       <label htmlFor="notes">Notes</label>
       <textarea
         value={notes}
@@ -34,8 +69,10 @@ const Form = ({ pages }) => {
         type="text"
         id="notes"
       />
-      <button>Submit</button>
-    </form>
+      <Button variant="contained" type="submit">
+        Send to Notion
+      </Button>
+    </Box>
   );
 };
 

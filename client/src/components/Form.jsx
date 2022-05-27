@@ -30,15 +30,17 @@ const Form = ({ pages }) => {
       sx={{
         display: "flex",
         flexDirection: "column",
-        justifyContent: "space-between",
-        height: "100%",
+        justifyContent: "center",
         gap: "1rem",
         maxWidth: "70ch",
         margin: "auto",
+        padding: "1rem",
       }}
     >
       <FormControl>
-        <InputLabel htmlFor="pageName">Choose where to save your writing:</InputLabel>
+        <InputLabel htmlFor="pageName">
+          Choose where to save your writing:
+        </InputLabel>
         <NativeSelect
           label="Where to save your writing:"
           name="pageName"
@@ -62,13 +64,21 @@ const Form = ({ pages }) => {
         }}
         value={memo}
       />
-      <label htmlFor="notes">Notes</label>
-      <textarea
+      <FormControl>
+      <TextField
+        label="Notes"
+        multiline={true}
+        rows={6}
+        width="100%"
+        variant="outlined"
+        name="notes"
+        placeholder="Notes"
         value={notes}
-        onChange={(e) => setNotes(e.target.value)}
-        type="text"
-        id="notes"
+        onChange={(e) => {
+          setNotes(e.target.value);
+        }}
       />
+      </FormControl>
       <Button variant="contained" type="submit">
         Send to Notion
       </Button>

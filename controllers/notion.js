@@ -99,7 +99,21 @@ const postToNotion = async (req, res) => {
     }
 }
 
+const logOut = async (req, res) => {
+  try {
+    await users.deleteOne({ uuid: req.cookies.user });
+    res.clearCookie("user");
+    res.status(200).send();
+  }
+  catch (err) {
+    console.log(err);
+    res.status(400).send(err.message);
+  }
+}
+
+
 module.exports ={ 
     getUserInfo: [logInUser, getDataFromNotion], 
-    postToNotion
+    postToNotion,
+    logOut
 };

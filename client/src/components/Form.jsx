@@ -86,11 +86,24 @@ const Form = ({ pages, isLoggedIn }) => {
           }}
         />
       </FormControl>
-      {isLoggedIn && (
+      <Box>
+        <Button
+          type="button"
+          variant="contained"
+          color="primary"
+          onClick={() => {
+            if (confirm("Are you sure you want to clear your notes?")) {
+              localStorage.removeItem("write-notes");
+              setNotes("");
+            }
+          }}
+        >
+          Clear
+        </Button>
         <Button variant="contained" type="submit">
           Send to Notion
         </Button>
-      )}
+      </Box>
     </Box>
   );
 };

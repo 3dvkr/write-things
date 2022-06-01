@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { Box, Paper, Typography, Button, Link } from "@mui/material";
 import Form from "./components/Form";
+import Picture from "./components/Picture";
+const oauth_client_id = "6cf136cc-35be-433c-935f-5ffdf2b3b5d1";
 // const oauth_client_id = ***;
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(!!document.cookie);
@@ -9,20 +11,20 @@ function App() {
   );
 
   const logOut = () => {
-    fetch("http://localhost:4000/logout", {
+    fetch("/logout", {
       method: "DELETE",
       credentials: "include",
     });
+    setIsLoggedIn(false);
   };
 
   useEffect(() => {
     setPages(JSON.parse(localStorage.getItem("page-list")) || []);
     const params = new URL(window.document.location).searchParams;
-
     const code = params.get("code");
 
     if (!code || isLoggedIn) return;
-    fetch(`http://localhost:4000/login/${code}`, {
+    fetch(`/login/${code}`, {
       credentials: "include",
     })
       .then((resp) => resp.json())
@@ -50,18 +52,21 @@ function App() {
         sx={{
           display: "flex",
           justifyContent: "flex-end",
-          alignItems: 'center'
+          alignItems: "center",
         }}
       >
         <Link
-        variant="button"
+          variant="button"
           href={`https://api.notion.com/v1/oauth/authorize?client_id=${oauth_client_id}&response_type=code&owner=user`}
         >
           {isLoggedIn && "Re-"}Connect To Notion
         </Link>
         {isLoggedIn && <Button onClick={logOut}>Disconnect from Notion</Button>}
       </Box>
-      <Form pages={pages} isLoggedIn={isLoggedIn} />
+      <Box sx={{display: "flex", justifyContent: "stretch"}}>
+        <Form pages={pages} isLoggedIn={isLoggedIn} />
+        <Picture />
+      </Box>
     </Paper>
   );
 }

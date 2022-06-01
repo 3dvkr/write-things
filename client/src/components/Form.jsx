@@ -17,7 +17,7 @@ const Form = ({ pages, isLoggedIn }) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    fetch("http://localhost:4000/notes", {
+    fetch("/notes", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
@@ -34,42 +34,42 @@ const Form = ({ pages, isLoggedIn }) => {
         flexDirection: "column",
         justifyContent: "center",
         gap: "1rem",
-        maxWidth: "70ch",
-        margin: "auto",
+        margin: "0 auto",
         padding: "1rem",
       }}
     >
       {isLoggedIn && (
-        <FormControl>
-          <InputLabel htmlFor="pageName">
-            Choose where to save your writing:
-          </InputLabel>
-          <NativeSelect
-            label="Where to save your writing:"
-            name="pageName"
-            value={pageName}
-            id="pageName"
-            onChange={(e) => setPageName(e.target.value)}
-          >
-            {pages.map((page) => (
-              <option value={page} key={page}>
-                {page}
-              </option>
-            ))}
-          </NativeSelect>
-        </FormControl>
+      <FormControl>
+        <InputLabel htmlFor="pageName">
+          Choose where to save your writing:
+        </InputLabel>
+        <NativeSelect
+          label="Where to save your writing:"
+          name="pageName"
+          value={pageName}
+          id="pageName"
+          onChange={(e) => setPageName(e.target.value)}
+        >
+          {pages.map((page) => (
+            <option value={page} key={page}>
+              {page}
+            </option>
+          ))}
+        </NativeSelect>
+      </FormControl>
       )}
       {isLoggedIn && (
-        <TextField
-          label="Title/Memo"
-          name="memo"
-          placeholder="Title/Memo"
-          onChange={(e) => {
-            setMemo(e.target.value);
-          }}
-          value={memo}
-        />
+      <TextField
+        label="Title/Memo"
+        name="memo"
+        placeholder="Title/Memo"
+        onChange={(e) => {
+          setMemo(e.target.value);
+        }}
+        value={memo}
+      />
       )}
+      
       <FormControl>
         <TextField
           label="Notes"
@@ -86,7 +86,7 @@ const Form = ({ pages, isLoggedIn }) => {
           }}
         />
       </FormControl>
-      <Box>
+      <Box sx={{display: "flex", gap: "1rem"}}>
         <Button
           type="button"
           variant="contained"
@@ -100,9 +100,11 @@ const Form = ({ pages, isLoggedIn }) => {
         >
           Clear
         </Button>
+        
         <Button variant="contained" type="submit">
           Send to Notion
         </Button>
+        
       </Box>
     </Box>
   );

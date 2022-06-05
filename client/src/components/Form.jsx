@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Box,
   FormControl,
@@ -6,6 +6,7 @@ import {
   NativeSelect,
   Button,
   TextField,
+  Typography
 } from "@mui/material";
 
 const Form = ({ pages, isLoggedIn }) => {
@@ -14,6 +15,13 @@ const Form = ({ pages, isLoggedIn }) => {
   );
   const [pageName, setPageName] = useState("");
   const [memo, setMemo] = useState("");
+  const [send, setSend] = useState("");
+
+  useEffect(() => {
+    (async () => {
+      await setTimeout(setSend, 3000, "");
+    })();
+  }, [send])
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -22,7 +30,14 @@ const Form = ({ pages, isLoggedIn }) => {
       headers: { "Content-Type": "application/json" },
       credentials: "include",
       body: JSON.stringify({ pageName, notes, memo }),
-    });
+    }).then((resp) => {
+      if (resp.status === 200) {
+        setSend("Success!");
+      } else {
+        setSend("Please try again.");
+      }
+    }
+    );
   };
 
   return (
@@ -39,37 +54,37 @@ const Form = ({ pages, isLoggedIn }) => {
       }}
     >
       {isLoggedIn && (
-      <FormControl>
-        <InputLabel htmlFor="pageName">
-          Choose where to save your writing:
-        </InputLabel>
-        <NativeSelect
-          label="Where to save your writing:"
-          name="pageName"
-          value={pageName}
-          id="pageName"
-          onChange={(e) => setPageName(e.target.value)}
-        >
-          {pages.map((page) => (
-            <option value={page} key={page}>
-              {page}
-            </option>
-          ))}
-        </NativeSelect>
-      </FormControl>
+        <FormControl>
+          <InputLabel htmlFor="pageName">
+            Choose where to save your writing:
+          </InputLabel>
+          <NativeSelect
+            label="Where to save your writing:"
+            name="pageName"
+            value={pageName}
+            id="pageName"
+            onChange={(e) => setPageName(e.target.value)}
+          >
+            {pages.map((page) => (
+              <option value={page} key={page}>
+                {page}
+              </option>
+            ))}
+          </NativeSelect>
+        </FormControl>
       )}
       {isLoggedIn && (
-      <TextField
-        label="Title/Memo"
-        name="memo"
-        placeholder="Title/Memo"
-        onChange={(e) => {
-          setMemo(e.target.value);
-        }}
-        value={memo}
-      />
+        <TextField
+          label="Title/Memo"
+          name="memo"
+          placeholder="Title/Memo"
+          onChange={(e) => {
+            setMemo(e.target.value);
+          }}
+          value={memo}
+        />
       )}
-      
+
       <FormControl>
         <TextField
           label="Notes"
@@ -86,7 +101,7 @@ const Form = ({ pages, isLoggedIn }) => {
           }}
         />
       </FormControl>
-      <Box sx={{display: "flex", gap: "1rem"}}>
+      <Box sx={{ display: "flex", gap: "1rem" }}>
         <Button
           type="button"
           variant="contained"
@@ -100,11 +115,21 @@ const Form = ({ pages, isLoggedIn }) => {
         >
           Clear
         </Button>
-        
-        <Button variant="contained" type="submit">
-          Send to Notion
-        </Button>
-        
+
+        {isLoggedIn && (
+          <Button variant="contained" type="submit">
+            Send to Notion
+          </Button>
+        )}
+        <Typography 
+          variant="body2"
+          sx={{
+            color: "green",
+            fontWeight: "bold",
+            textAlign: "center",
+            margin: "1rem",
+          }}
+        >{send}</Typography>
       </Box>
     </Box>
   );

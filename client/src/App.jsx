@@ -1,22 +1,15 @@
 import { useState, useEffect } from "react";
-import { Box, Paper, Typography, Button, Link } from "@mui/material";
+import { Typography, Grid } from "@mui/material";
+import NotionConnection from "./components/NotionConnection";
 import Form from "./components/Form";
 import Picture from "./components/Picture";
-const oauth_client_id = "6cf136cc-35be-433c-935f-5ffdf2b3b5d1";
+
 // const oauth_client_id = ***;
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(!!document.cookie);
   const [pages, setPages] = useState(
     JSON.parse(localStorage.getItem("page-list")) || []
   );
-
-  const logOut = () => {
-    fetch("/logout", {
-      method: "DELETE",
-      credentials: "include",
-    });
-    setIsLoggedIn(false);
-  };
 
   useEffect(() => {
     setPages(JSON.parse(localStorage.getItem("page-list")) || []);
@@ -36,38 +29,34 @@ function App() {
   }, []);
 
   return (
-    <Paper
+    <Grid
+      container
+      spacing={2}
       sx={{
-        padding: "1rem",
-        width: 3 / 4,
-        maxWidth: 700,
+        maxWidth: "min(75%, 1200px)",
         margin: "0 auto",
-        marginTop: "calc(2.5rem + 2vh)",
+        marginTop: "calc(1rem + 3vw)",
       }}
     >
-      <Typography variant="h2" component="h1">
-        Write Things!
-      </Typography>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "flex-end",
-          alignItems: "center",
-        }}
-      >
-        <Link
-          variant="button"
-          href={`https://api.notion.com/v1/oauth/authorize?client_id=${oauth_client_id}&response_type=code&owner=user`}
-        >
-          {isLoggedIn && "Re-"}Connect To Notion
-        </Link>
-        {isLoggedIn && <Button onClick={logOut}>Disconnect from Notion</Button>}
-      </Box>
-      <Box sx={{display: "flex", justifyContent: "stretch"}}>
+      <Grid item xs={12} md={8}>
+        <Typography variant="h2" component="h1">
+          Write Things!
+        </Typography>
+      </Grid>
+
+      <Grid item xs={12} md={4}>
+        <NotionConnection
+          isLoggedIn={isLoggedIn}
+          setIsLoggedIn={setIsLoggedIn}
+        />
+      </Grid>
+      <Grid item xs={12} md={6}>
         <Form pages={pages} isLoggedIn={isLoggedIn} />
+      </Grid>
+      <Grid item xs={12} md={6}>
         <Picture />
-      </Box>
-    </Paper>
+      </Grid>
+    </Grid>
   );
 }
 

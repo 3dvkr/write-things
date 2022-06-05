@@ -6,7 +6,9 @@ const { Client } = require("@notionhq/client");
 const users = require("../config/database");
 const createPageOptions = require("../config/notionPageOptions");
 
-require("dotenv").config();
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
 const notionClientId = process.env.NOTION_CLIENT_ID;
 const notionClientSecret = process.env.NOTION_CLIENT_SECRET;
 

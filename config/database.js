@@ -1,5 +1,6 @@
-require("dotenv").config();
-
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
 const MongoClient = require("mongodb").MongoClient;
 
 const client = new MongoClient(process.env.MONGO_URL, {
@@ -8,7 +9,7 @@ const client = new MongoClient(process.env.MONGO_URL, {
 });
 
 client.connect((err) => {
-    console.log("Connected to MongoDB");
+  console.log("Connected to MongoDB");
 });
 
 module.exports = client.db("notes-app").collection("users");

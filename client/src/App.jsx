@@ -17,7 +17,7 @@ function App() {
     const code = params.get("code");
 
     if (!code || isLoggedIn) return;
-    fetch(`/login/${code}`, {
+    fetch(`/api/login/${code}`, {
       credentials: "include",
     })
       .then((resp) => resp.json())

@@ -15,16 +15,19 @@ app.use(
   })
 );
 app.use(cookieParser());
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, 'client/dist')));
+}
 
-app.use(express.static(path.join(__dirname, 'client/dist')));
+app.get("/api/login/:code", getUserInfo);
+app.post("/api/notes", postToNotion);
+app.delete("/api/logout", logOut);
 
-app.get("/login/:code", getUserInfo);
-app.post("/notes", postToNotion);
-app.delete("/logout", logOut);
-
-app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname + "/client/public/index.html"));
-  });
+if (process.env.NODE_ENV === "production") {
+  app.get("*", (req, res) => {
+      res.sendFile(path.join(__dirname + "/client/public/index.html"));
+    });
+}
 
 app.listen(PORT, () => {
   console.log("Server is running on port ", PORT);

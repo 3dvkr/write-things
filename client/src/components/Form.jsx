@@ -29,7 +29,7 @@ const Form = ({ pages, isLoggedIn }) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    fetch("/notes", {
+    fetch("/api/notes", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include",

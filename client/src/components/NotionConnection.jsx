@@ -4,7 +4,7 @@ const oauth_client_id = "6cf136cc-35be-433c-935f-5ffdf2b3b5d1";
 
 const NotionConnection = ({isLoggedIn, setIsLoggedIn}) => {
     const logOut = () => {
-        fetch("/logout", {
+        fetch("/api/logout", {
           method: "DELETE",
           credentials: "include",
         });

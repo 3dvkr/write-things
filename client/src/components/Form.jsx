@@ -124,7 +124,7 @@ const Form = ({ pages, isLoggedIn }) => {
         <Typography 
           variant="body2"
           sx={{
-            color: "green",
+            color: send === "Success!" ? "green" : "red",
             fontWeight: "bold",
             textAlign: "center",
             margin: "1rem",

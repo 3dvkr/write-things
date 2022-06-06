@@ -18,10 +18,10 @@ const Picture = () => {
         margin: "0 auto",
       }}
     >
-      <Box sx={{ height: "300px" }}>
+      <Box sx={{ height: "286px" }}>
         {imgSrc && (
           <Fade in={true} timeout={2000} easing="ease-in-out">
-            <CardMedia component="img" image={imgSrc} />
+            <CardMedia component="img" image={imgSrc} sx={{height: "100%"}}/>
           </Fade>
         )}
       </Box>

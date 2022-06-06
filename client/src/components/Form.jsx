@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import { useMediaQuery } from "@mui/material";
+
 import {
   Box,
   FormControl,
@@ -6,7 +8,7 @@ import {
   NativeSelect,
   Button,
   TextField,
-  Typography
+  Typography,
 } from "@mui/material";
 
 const Form = ({ pages, isLoggedIn }) => {
@@ -17,11 +19,13 @@ const Form = ({ pages, isLoggedIn }) => {
   const [memo, setMemo] = useState("");
   const [send, setSend] = useState("");
 
+  const isMobile = useMediaQuery("(max-width:900px)");
+
   useEffect(() => {
-    (async () => {
-      await setTimeout(setSend, 3000, "");
-    })();
-  }, [send])
+    if (send !== "") {
+      setTimeout(setSend, 3000, "");
+    }
+  }, [send]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -36,8 +40,7 @@ const Form = ({ pages, isLoggedIn }) => {
       } else {
         setSend("Please try again.");
       }
-    }
-    );
+    });
   };
 
   return (
@@ -48,9 +51,8 @@ const Form = ({ pages, isLoggedIn }) => {
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
-        gap: "1rem",
+        gap: "8px",
         margin: "0 auto",
-        padding: "1rem",
       }}
     >
       {isLoggedIn && (
@@ -89,7 +91,7 @@ const Form = ({ pages, isLoggedIn }) => {
         <TextField
           label="Notes"
           multiline={true}
-          rows={6}
+          rows={isLoggedIn || isMobile ? 6 : 11}
           width="100%"
           variant="outlined"
           name="notes"
@@ -121,7 +123,7 @@ const Form = ({ pages, isLoggedIn }) => {
             Send to Notion
           </Button>
         )}
-        <Typography 
+        <Typography
           variant="body2"
           sx={{
             color: send === "Success!" ? "green" : "red",
@@ -129,7 +131,9 @@ const Form = ({ pages, isLoggedIn }) => {
             textAlign: "center",
             margin: "1rem",
           }}
-        >{send}</Typography>
+        >
+          {send}
+        </Typography>
       </Box>
     </Box>
   );

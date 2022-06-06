@@ -8,7 +8,7 @@ import {
   Fade,
 } from "@mui/material";
 
-const Picture = () => {
+const Picture = ({isLoggedIn}) => {
   const [imgSrc, setImgSrc] = useState("https://picsum.photos/300");
   return (
     <Card
@@ -18,7 +18,7 @@ const Picture = () => {
         margin: "0 auto",
       }}
     >
-      <Box sx={{ height: "286px" }}>
+      <Box sx={{ height: isLoggedIn ? "290px" : "286px" }}>
         {imgSrc && (
           <Fade in={true} timeout={2000} easing="ease-in-out">
             <CardMedia component="img" image={imgSrc} sx={{height: "100%"}}/>

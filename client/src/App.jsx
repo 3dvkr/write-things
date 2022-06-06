@@ -3,8 +3,6 @@ import { Typography, Grid } from "@mui/material";
 import NotionConnection from "./components/NotionConnection";
 import Form from "./components/Form";
 import Picture from "./components/Picture";
-
-// const oauth_client_id = ***;
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(!!document.cookie);
   const [pages, setPages] = useState(
@@ -54,7 +52,7 @@ function App() {
         <Form pages={pages} isLoggedIn={isLoggedIn} />
       </Grid>
       <Grid item xs={12} md={6}>
-        <Picture />
+        <Picture isLoggedIn={isLoggedIn} />
       </Grid>
     </Grid>
   );

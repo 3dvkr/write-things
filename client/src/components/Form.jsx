@@ -11,7 +11,7 @@ import {
   Typography,
 } from "@mui/material";
 
-const Form = ({ pages, isLoggedIn }) => {
+const Form = ({ pages, isLoggedIn, warning }) => {
   const [notes, setNotes] = useState(
     JSON.parse(localStorage.getItem("write-notes")) || ""
   );
@@ -126,7 +126,7 @@ const Form = ({ pages, isLoggedIn }) => {
         <Typography
           variant="body2"
           sx={{
-            color: send === "Success!" ? "green" : "red",
+            color: send === "Success!" ? "green" : "error",
             fontWeight: "bold",
             textAlign: "center",
             margin: "1rem",
@@ -134,6 +134,7 @@ const Form = ({ pages, isLoggedIn }) => {
         >
           {send}
         </Typography>
+        {warning && <Typography variant="body1" color="error">{warning}</Typography>}
       </Box>
     </Box>
   );

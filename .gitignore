@@ -4,3 +4,4 @@ notes
 .env
 package-lock.json
 dist
+assets

@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { useMediaQuery } from "@mui/material";
 
 import {
   Box,
@@ -11,7 +10,7 @@ import {
   Typography,
 } from "@mui/material";
 
-const Form = ({ pages, isLoggedIn, warning }) => {
+const Form = ({ pages, isLoggedIn, warning, isMobile }) => {
   const [notes, setNotes] = useState(
     JSON.parse(localStorage.getItem("write-notes")) || ""
   );
@@ -19,7 +18,11 @@ const Form = ({ pages, isLoggedIn, warning }) => {
   const [memo, setMemo] = useState("");
   const [send, setSend] = useState("");
 
-  const isMobile = useMediaQuery("(max-width:900px)");
+  const [rows , setRows] = useState(isLoggedIn || isMobile ? 6 : 11);
+
+  useEffect(()=> {
+    setRows(isLoggedIn || isMobile ? 6 : 11);
+  }, [isLoggedIn, isMobile]);
 
   useEffect(() => {
     if (send !== "") {
@@ -91,7 +94,7 @@ const Form = ({ pages, isLoggedIn, warning }) => {
         <TextField
           label="Notes"
           multiline={true}
-          rows={isLoggedIn || isMobile ? 6 : 11}
+          rows={rows}
           width="100%"
           variant="outlined"
           name="notes"

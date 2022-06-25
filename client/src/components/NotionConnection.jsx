@@ -26,7 +26,7 @@ const NotionConnection = ({isLoggedIn, setIsLoggedIn}) => {
         >
           {isLoggedIn && "Re-"}Connect To Notion
         </Link>
-        {isLoggedIn && <Button onClick={logOut} variant="outlined">Disconnect from Notion</Button>}
+        {isLoggedIn && <Button onClick={logOut} variant="text">Disconnect from Notion</Button>}
       </Box>
     )
 }

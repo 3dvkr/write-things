@@ -3,7 +3,10 @@ import Popover from "@mui/material/Popover";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
+import Tooltip from "@mui/material/Tooltip";
 import Slider from "@mui/material/Slider";
+
+import SettingsIcon from "@mui/icons-material/Settings";
 
 function valuetext(value) {
   return `${value} words`;
@@ -20,13 +23,15 @@ export default function WordCountSlider({ wordRate, setWordRate }) {
   };
 
   const open = Boolean(anchorEl);
-  const id = open ? "simple-popover" : undefined;
+  const id = open ? "word-count-slider" : undefined;
 
   return (
     <div>
-      <Button aria-describedby={id} variant="contained" onClick={handleClick}>
-        Refresh Rate
-      </Button>
+      <Tooltip title="Set Image Refresh Rate">
+        <Button aria-describedby={id} variant="contained" onClick={handleClick}>
+          <SettingsIcon />
+        </Button>
+      </Tooltip>
       <Popover
         PaperProps={{ sx: { overflow: "visible" } }}
         id={id}
@@ -34,11 +39,16 @@ export default function WordCountSlider({ wordRate, setWordRate }) {
         anchorEl={anchorEl}
         onClose={handleClose}
         anchorOrigin={{
+          vertical: "top",
+          horizontal: "left",
+        }}
+        transformOrigin={{
           vertical: "bottom",
           horizontal: "left",
         }}
       >
-        <Box sx={{ width: 300 }}>
+        <Box sx={{ width: "25ch", marginInline: "2ch" }}>
+          <Tooltip title="Set Image Refresh Rate">
           <Slider
             aria-label="Word Rate"
             getAriaValueText={valuetext}
@@ -55,6 +65,7 @@ export default function WordCountSlider({ wordRate, setWordRate }) {
             value={wordRate}
             onChange={(e) => setWordRate(e.target.value)}
           />
+          </Tooltip>
         </Box>
       </Popover>
     </div>

@@ -51,8 +51,7 @@ function App() {
         spacing={2}
         sx={{
           maxWidth: "min(75%, 1200px)",
-          margin: "0 auto",
-          marginTop: "calc(1rem + 3vw)",
+          margin: "max(1rem, calc(5vw)) auto",
         }}
       >
         <Grid item xs={12} md={6}>

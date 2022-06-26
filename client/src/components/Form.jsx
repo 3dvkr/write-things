@@ -61,10 +61,10 @@ const Form = ({ pages, isLoggedIn, warning, isMobile }) => {
       {isLoggedIn && (
         <FormControl>
           <InputLabel htmlFor="pageName">
-            Choose where to save your writing:
+            Choose where to save your note:
           </InputLabel>
           <NativeSelect
-            label="Where to save your writing:"
+            label="Where to save your note:"
             name="pageName"
             value={pageName}
             id="pageName"

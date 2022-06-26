@@ -1,22 +1,44 @@
 import { useState, useEffect } from "react";
-import { Typography, Grid } from "@mui/material";
-import { useMediaQuery } from "@mui/material";
+import { Grid, useMediaQuery } from "@mui/material";
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 
-import NotionConnection from "./components/NotionConnection";
 import Form from "./components/Form";
 import Picture from "./components/Picture";
 import NavBar from "./components/NavBar";
 
+import "./App.css";
+const color = 210;
+const theme = createTheme({
+  typography: {
+    fontFamily: "monospace",
+    h4: {
+      fontFamily: "'Playball', sans-serif",
+      letterSpacing: 6
+    },
+  },
+  palette: {
+    text: {
+      primary: `hsl(${color}, 30%, 10%)`,
+      secondary: `hsl(${color}, 20%, 45%)`
+    },
+    primary: {
+      main: `hsl(${color}, 30%, 35%)`,
+    },
+    secondary: {
+      main: `hsl(${color}, 20%, 25%)`, 
+    },
+  },
+});
+
 function App() {
-  // const [isLoggedIn, setIsLoggedIn] = useState(!!document.cookie);
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(!!document.cookie);
   const [warning, setWarning] = useState("");
   const [pages, setPages] = useState(
     JSON.parse(localStorage.getItem("page-list")) || []
   );
   const [wordRate, setWordRate] = useState(10);
 
-  const isMobile = useMediaQuery("(max-width:800px)");
+  const isMobile = useMediaQuery("(max-width:1200px)");
 
   useEffect(() => {
     setPages(JSON.parse(localStorage.getItem("page-list")) || []);
@@ -44,14 +66,14 @@ function App() {
   }, []);
 
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <NavBar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
       <Grid
         container
         spacing={2}
         sx={{
           maxWidth: "min(75%, 1200px)",
-          margin: "max(1rem, calc(5vw)) auto",
+          margin: "max(1rem, 3vw) auto",
         }}
       >
         <Grid item xs={12} md={6}>
@@ -70,7 +92,7 @@ function App() {
           />
         </Grid>
       </Grid>
-    </>
+    </ThemeProvider>
   );
 }
 

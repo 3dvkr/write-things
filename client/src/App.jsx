@@ -31,8 +31,7 @@ const theme = createTheme({
 });
 
 function App() {
-  // const [isLoggedIn, setIsLoggedIn] = useState(!!document.cookie);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(!!document.cookie);
   const [warning, setWarning] = useState("");
   const [pages, setPages] = useState(
     JSON.parse(localStorage.getItem("page-list")) || []

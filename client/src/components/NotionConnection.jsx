@@ -1,4 +1,4 @@
-import { Box, Button, Link } from "@mui/material";
+import { Box, Button } from "@mui/material";
 
 const oauth_client_id = "6cf136cc-35be-433c-935f-5ffdf2b3b5d1";
 
@@ -20,13 +20,12 @@ const NotionConnection = ({isLoggedIn, setIsLoggedIn}) => {
           gap: "1rem"
         }}
       >
-        <Link
-          variant="button"
+        <Button
           color="inherit"
           href={`https://api.notion.com/v1/oauth/authorize?client_id=${oauth_client_id}&response_type=code&owner=user`}
         >
           {isLoggedIn && "Re-"}Connect To Notion
-        </Link>
+        </Button>
         {isLoggedIn && <Button onClick={logOut} color="inherit" variant="text">Disconnect from Notion</Button>}
       </Box>
     )

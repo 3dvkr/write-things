@@ -51,11 +51,12 @@ const Form = ({ pages, isLoggedIn, warning, isMobile }) => {
       component="form"
       onSubmit={submitHandler}
       sx={{
+        flexGrow: 7,
         display: "flex",
         flexDirection: "column",
-        justifyContent: "center",
-        gap: "8px",
-        margin: "0 auto",
+        justifyContent: "stretch",
+        gap: "1em",
+        height: "100%"
       }}
     >
       {isLoggedIn && (

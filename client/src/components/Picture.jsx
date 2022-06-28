@@ -9,11 +9,11 @@ const Picture = ({ isLoggedIn, wordRate, setWordRate }) => {
   return (
     <Card
       sx={{
-        width: 1,
-        margin: "0 auto",
+        flexGrow: 5,
       }}
     >
       <Box sx={{ height: isLoggedIn ? "290px" : "286px" }}>
+      {/* <Box> */}
         {imgSrc && (
           <Fade in={true} timeout={2000} easing="ease-in-out">
             <CardMedia

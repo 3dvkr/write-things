@@ -9,7 +9,7 @@ import NotionConnection from "./NotionConnection";
 
 export default function NavBar({isLoggedIn, setIsLoggedIn}) {
   return (
-    <Box sx={{ flexGrow: 1}}>
+    <Box sx={{marginBottom: "min(1rem, 5vw)"}}>
       <AppBar position="static" color="secondary">
         <Toolbar>
           <Typography variant="h4" component="h1" sx={{ flexGrow: 1 }}>

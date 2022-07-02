@@ -9,24 +9,26 @@ const Picture = ({ isLoggedIn, wordRate, setWordRate }) => {
   return (
     <Card
       sx={{
-        flexGrow: 5,
+        flexShrink: 0,
+        flexBasis: "40%",
       }}
     >
-      <Box sx={{ height: isLoggedIn ? "290px" : "286px" }}>
-      {/* <Box> */}
+      {/* <Box sx={{ height: isLoggedIn ? "290px" : "286px" }}> */}
+      <Box sx={{ height: "286px" }}>
         {imgSrc && (
           <Fade in={true} timeout={2000} easing="ease-in-out">
             <CardMedia
               component="img"
               image={imgSrc}
               sx ={{
-                maxHeight: "100%"
+                maxHeight: "100%",
+                width: "100%"
               }}
             />
           </Fade>
         )}
       </Box>
-      <CardActions sx={{ justifyContent: "space-around" }}>
+      <CardActions sx={{ justifyContent: "space-around", marginTop: "1.2rem" }}>
         <WordCountSlider wordRate={wordRate} setWordRate={setWordRate} />
         <Button
           variant="contained"

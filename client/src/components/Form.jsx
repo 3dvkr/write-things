@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 
 import {
   Box,
+  Paper,
   FormControl,
   InputLabel,
   NativeSelect,
@@ -47,16 +48,19 @@ const Form = ({ pages, isLoggedIn, warning, isMobile }) => {
   };
 
   return (
+    <Paper sx={{
+      flexBasis: "50%",
+      height: "100%",
+      paddingBottom: "1em"
+    }}>
     <Box
       component="form"
       onSubmit={submitHandler}
       sx={{
-        flexGrow: 7,
         display: "flex",
         flexDirection: "column",
         justifyContent: "stretch",
         gap: "1em",
-        height: "100%"
       }}
     >
       {isLoggedIn && (
@@ -141,6 +145,7 @@ const Form = ({ pages, isLoggedIn, warning, isMobile }) => {
         {warning && <Typography variant="body1" color="error">{warning}</Typography>}
       </Box>
     </Box>
+    </Paper>
   );
 };
 

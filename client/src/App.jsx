@@ -74,7 +74,7 @@ function App() {
           direction={{ xs: "column", sm: "row" }}
           spacing={{ xs: 1, sm: 2, md: 4 }}
           justifyContent={{ sm: "space-between", md: "space-around" }}
-          alignItems={{xs:"stretch", sm:"stretch"}}
+          alignItems={{xs:"stretch"}}
         >
           <Form
             pages={pages}

@@ -32,14 +32,39 @@ const theme = createTheme({
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(!!document.cookie);
+
+  const [imgSrc, setImgSrc] = useState("https://picsum.photos/300");
+  const [changeImg, setChangeImg] = useState(false);
+
   const [warning, setWarning] = useState("");
   const [pages, setPages] = useState(
     JSON.parse(localStorage.getItem("page-list")) || []
   );
   const [wordRate, setWordRate] = useState(10);
+  let [wordCount, setWordCount] = useState(0);
 
   const isMobile = useMediaQuery("(max-width:600px)");
-  console.log(isMobile);
+
+  const getNewImage = async () => {
+    let data = await fetch('https://picsum.photos/300');
+    let url = await data.url;
+    console.log(url);
+    setImgSrc(url);
+  }
+  
+  function countWords({ target }) {
+    let num = target.value.split(/\s+|\n+/g).filter(el => el.length > 0);
+    setWordCount(num.length);
+    
+    if (wordCount % wordRate === 0 && wordCount > 0) {
+      if (!changeImg) {
+        getNewImage();
+        setChangeImg(true)
+      }
+    } else {
+      setChangeImg(false);
+    }
+  }
 
   useEffect(() => {
     setPages(JSON.parse(localStorage.getItem("page-list")) || []);
@@ -81,11 +106,15 @@ function App() {
             isLoggedIn={isLoggedIn}
             warning={warning}
             isMobile={isMobile}
+            countWords={countWords}
+            wordCount={wordCount}
           />
           <Picture
             isLoggedIn={isLoggedIn}
             wordRate={wordRate}
             setWordRate={setWordRate}
+            imgSrc={imgSrc}
+            setImgSrc={setImgSrc}
           />
         </Stack>
       </Container>

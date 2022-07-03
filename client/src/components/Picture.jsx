@@ -3,8 +3,7 @@ import { Card, CardMedia, CardActions, Button, Box, Fade } from "@mui/material";
 import AutorenewIcon from "@mui/icons-material/Autorenew";
 import WordCountSlider from "./WordCountSlider";
 
-const Picture = ({ isLoggedIn, wordRate, setWordRate }) => {
-  const [imgSrc, setImgSrc] = useState("https://picsum.photos/300");
+const Picture = ({ isLoggedIn, wordRate, setWordRate, imgSrc, setImgSrc }) => {
   
   return (
     <Card
@@ -13,8 +12,7 @@ const Picture = ({ isLoggedIn, wordRate, setWordRate }) => {
         flexBasis: "40%",
       }}
     >
-      {/* <Box sx={{ height: isLoggedIn ? "290px" : "286px" }}> */}
-      <Box sx={{ height: "286px" }}>
+      <Box sx={{ height: isLoggedIn ? "290px" : "286px" }}>
         {imgSrc && (
           <Fade in={true} timeout={2000} easing="ease-in-out">
             <CardMedia

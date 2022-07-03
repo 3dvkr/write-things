@@ -11,7 +11,7 @@ import {
   Typography,
 } from "@mui/material";
 
-const Form = ({ pages, isLoggedIn, warning, isMobile }) => {
+const Form = ({ pages, isLoggedIn, warning, isMobile, wordCount, countWords }) => {
   const [notes, setNotes] = useState(
     JSON.parse(localStorage.getItem("write-notes")) || ""
   );
@@ -108,10 +108,13 @@ const Form = ({ pages, isLoggedIn, warning, isMobile }) => {
           onChange={(e) => {
             localStorage.setItem("write-notes", JSON.stringify(notes));
             setNotes(e.target.value);
+            console.log("in text field");
+            countWords(e);
           }}
         />
       </FormControl>
       <Box sx={{ display: "flex", gap: "1rem" }}>
+        <Typography variant="body1">Word Count: {wordCount}</Typography>
         <Button
           type="button"
           variant="contained"

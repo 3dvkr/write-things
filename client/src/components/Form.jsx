@@ -113,7 +113,7 @@ const Form = ({ pages, isLoggedIn, warning, isMobile, wordCount, countWords }) =
           }}
         />
       </FormControl>
-      <Box sx={{ display: "flex", gap: "1rem" }}>
+      <Box sx={{ display: "flex", gap: "1rem", paddingLeft:"1rem"}}>
         <Typography variant="body1">Word Count: {wordCount}</Typography>
         <Button
           type="button"

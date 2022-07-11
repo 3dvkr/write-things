@@ -5,6 +5,7 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import Form from "./components/Form";
 import Picture from "./components/Picture";
 import NavBar from "./components/NavBar";
+import Info from "./components/Info";
 
 import "./App.css";
 const color = 210;
@@ -43,23 +44,21 @@ function App() {
   const [wordRate, setWordRate] = useState(10);
   let [wordCount, setWordCount] = useState(0);
 
-  const isMobile = useMediaQuery("(max-width:600px)");
-
+  const isMobile = useMediaQuery("(max-width:600px)")
   const getNewImage = async () => {
-    let data = await fetch('https://picsum.photos/300');
+    let data = await fetch("https://picsum.photos/300");
     let url = await data.url;
-    console.log(url);
     setImgSrc(url);
-  }
-  
+  };
+
   function countWords({ target }) {
-    let num = target.value.split(/\s+|\n+/g).filter(el => el.length > 0);
+    let num = target.value.split(/\s+|\n+/g).filter((el) => el.length > 0);
     setWordCount(num.length);
-    
+
     if (wordCount % wordRate === 0 && wordCount > 0) {
       if (!changeImg) {
         getNewImage();
-        setChangeImg(true)
+        setChangeImg(true);
       }
     } else {
       setChangeImg(false);
@@ -95,11 +94,12 @@ function App() {
     <ThemeProvider theme={theme}>
       <Container>
         <NavBar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+        <Info wordRate={wordRate} />
         <Stack
           direction={{ xs: "column", sm: "row" }}
           spacing={{ xs: 1, sm: 2, md: 4 }}
           justifyContent={{ sm: "space-between", md: "space-around" }}
-          alignItems={{xs:"stretch"}}
+          alignItems={{ xs: "stretch" }}
         >
           <Form
             pages={pages}

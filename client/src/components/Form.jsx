@@ -5,7 +5,8 @@ import {
   Paper,
   FormControl,
   InputLabel,
-  NativeSelect,
+  Select,
+  MenuItem,
   Button,
   TextField,
   Typography,
@@ -61,26 +62,27 @@ const Form = ({ pages, isLoggedIn, warning, isMobile, wordCount, countWords }) =
         flexDirection: "column",
         justifyContent: "stretch",
         gap: "1em",
+        m: 1
       }}
     >
       {isLoggedIn && (
         <FormControl>
-          <InputLabel htmlFor="pageName">
+          <InputLabel htmlFor="pageName" sx={{bgcolor: "white"}}>
             Choose where to save your note:
           </InputLabel>
-          <NativeSelect
-            label="Where to save your note:"
+          <Select
+            labelId="Where to save your note:"
             name="pageName"
             value={pageName}
             id="pageName"
             onChange={(e) => setPageName(e.target.value)}
           >
             {pages.map((page) => (
-              <option value={page} key={page}>
+              <MenuItem value={page} key={page}>
                 {page}
-              </option>
+              </MenuItem>
             ))}
-          </NativeSelect>
+          </Select>
         </FormControl>
       )}
       {isLoggedIn && (
